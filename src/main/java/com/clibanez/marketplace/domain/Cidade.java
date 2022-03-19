@@ -1,42 +1,38 @@
 package com.clibanez.marketplace.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Categoria implements Serializable {
+public class Cidade implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference //corrigindo o erro de serializacao ciclica o lado onde chama colocamos 
-	// @JsonManagedReference outro colocamos 	@JsonBackReference
-	@ManyToMany(mappedBy="categorias")
-	private List<Produto> produtos = new ArrayList<>(); //Nao colocamos lista de atributos nos contrutores O.B.S o que era aceitavel era (private Estado Estado)
+	@ManyToOne
+	@JoinColumn(name="estado_id")
+	private Estado estado;
 
-	public Categoria() {
+	public Cidade() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-
-	public Categoria(Integer id, String nome) {
+	
+	public Cidade(Integer id, String nome,Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
@@ -54,15 +50,13 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -78,13 +72,18 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Cidade other = (Cidade) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Categoria [id=" + id + ", nome=" + nome + "]";
+		return "Cidade [id=" + id + ", nome=" + nome + ", estado=" + estado + "]";
 	}
+	
+	
+	
+	
+	
 
 }
