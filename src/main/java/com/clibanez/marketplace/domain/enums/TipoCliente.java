@@ -22,7 +22,7 @@ public enum TipoCliente {
 	}
 	
 	public static TipoCliente toEnum(Integer codigo) {
-		if(cod == null) {
+		if(codigo == null) {
 			return null;
 		}
 		for(TipoCliente x : TipoCliente.values()) {

@@ -11,10 +11,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.clibanez.marketplace.domain.Categoria;
 import com.clibanez.marketplace.domain.Cidade;
+import com.clibanez.marketplace.domain.Cliente;
+import com.clibanez.marketplace.domain.Endereco;
 import com.clibanez.marketplace.domain.Estado;
 import com.clibanez.marketplace.domain.Produto;
+import com.clibanez.marketplace.domain.enums.TipoCliente;
 import com.clibanez.marketplace.repositories.CategoriaRepository;
 import com.clibanez.marketplace.repositories.CidadeRepository;
+import com.clibanez.marketplace.repositories.ClienteRepository;
+import com.clibanez.marketplace.repositories.EnderecoRepository;
 import com.clibanez.marketplace.repositories.EstadoRepository;
 import com.clibanez.marketplace.repositories.ProdutoRepository;
 
@@ -33,6 +38,12 @@ public class MarketplaceApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketplaceApplication.class, args);
@@ -72,6 +83,15 @@ public class MarketplaceApplication implements CommandLineRunner{
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 		
+		Cliente cli1 = new Cliente(null, "Clibanez", "clibanezzcaldas@gmail.com", "222.222.222.22", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("(83)98388-8903"));
+		
+		Endereco end1 = new Endereco(null, "Rua campos", "286b", null, "Portal", "58424-273", cli1, cid3);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(end1));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1));
 		
 		
 	}
