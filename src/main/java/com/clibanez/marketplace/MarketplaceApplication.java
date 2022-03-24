@@ -2,6 +2,8 @@ package com.clibanez.marketplace;
 
 
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,19 @@ import com.clibanez.marketplace.domain.Cidade;
 import com.clibanez.marketplace.domain.Cliente;
 import com.clibanez.marketplace.domain.Endereco;
 import com.clibanez.marketplace.domain.Estado;
+import com.clibanez.marketplace.domain.Pagamento;
+import com.clibanez.marketplace.domain.PagamentoComCartao;
+import com.clibanez.marketplace.domain.Pedido;
 import com.clibanez.marketplace.domain.Produto;
+import com.clibanez.marketplace.domain.enums.EstadoPagamento;
 import com.clibanez.marketplace.domain.enums.TipoCliente;
 import com.clibanez.marketplace.repositories.CategoriaRepository;
 import com.clibanez.marketplace.repositories.CidadeRepository;
 import com.clibanez.marketplace.repositories.ClienteRepository;
 import com.clibanez.marketplace.repositories.EnderecoRepository;
 import com.clibanez.marketplace.repositories.EstadoRepository;
+import com.clibanez.marketplace.repositories.PagamentoRepository;
+import com.clibanez.marketplace.repositories.PedidoRepository;
 import com.clibanez.marketplace.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -44,6 +52,12 @@ public class MarketplaceApplication implements CommandLineRunner{
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketplaceApplication.class, args);
@@ -92,6 +106,22 @@ public class MarketplaceApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(end1));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+		
+		
+		Pagamento pagtoCartao1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagtoCartao1);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1));
+		
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1));
+		pagamentoRepository.saveAll(Arrays.asList(pagtoCartao1));
+		
+		
 		
 		
 	}
