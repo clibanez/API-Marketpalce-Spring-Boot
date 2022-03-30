@@ -24,8 +24,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference //corrigindo o erro de serializacao ciclica o lado onde chama colocamos 
-	// @JsonManagedReference outro colocamos 	@JsonBackReference
+	
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>(); //Nao colocamos lista de atributos nos contrutores O.B.S o que era aceitavel era (private Estado Estado)
 

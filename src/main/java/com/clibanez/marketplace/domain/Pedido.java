@@ -2,7 +2,9 @@ package com.clibanez.marketplace.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,7 +13,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 
 @Entity
 public class Pedido implements Serializable{
@@ -20,19 +30,26 @@ public class Pedido implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Temporal(TemporalType.DATE)
 	private Date instante;
 	
 	//mapeamento bidirecional OneToOne
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")//para nao da erro de entidadetransientequando vai salva isso é do jpa
 	private Pagamento pagamento;
+
 	
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco endereco;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido() {
 		super();
@@ -46,6 +63,16 @@ public class Pedido implements Serializable{
 	
 		this.cliente = cliente;
 		this.endereco = endereco;
+	}
+	
+	
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	public Integer getId() {

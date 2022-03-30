@@ -3,8 +3,9 @@ package com.clibanez.marketplace;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Arrays;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +17,9 @@ import com.clibanez.marketplace.domain.Cidade;
 import com.clibanez.marketplace.domain.Cliente;
 import com.clibanez.marketplace.domain.Endereco;
 import com.clibanez.marketplace.domain.Estado;
+import com.clibanez.marketplace.domain.ItemPedido;
 import com.clibanez.marketplace.domain.Pagamento;
+import com.clibanez.marketplace.domain.PagamentoComBoleto;
 import com.clibanez.marketplace.domain.PagamentoComCartao;
 import com.clibanez.marketplace.domain.Pedido;
 import com.clibanez.marketplace.domain.Produto;
@@ -27,9 +30,12 @@ import com.clibanez.marketplace.repositories.CidadeRepository;
 import com.clibanez.marketplace.repositories.ClienteRepository;
 import com.clibanez.marketplace.repositories.EnderecoRepository;
 import com.clibanez.marketplace.repositories.EstadoRepository;
+import com.clibanez.marketplace.repositories.ItemPedidoRepository;
 import com.clibanez.marketplace.repositories.PagamentoRepository;
 import com.clibanez.marketplace.repositories.PedidoRepository;
 import com.clibanez.marketplace.repositories.ProdutoRepository;
+
+
 
 @SpringBootApplication
 public class MarketplaceApplication implements CommandLineRunner{
@@ -58,6 +64,9 @@ public class MarketplaceApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketplaceApplication.class, args);
@@ -75,6 +84,10 @@ public class MarketplaceApplication implements CommandLineRunner{
 		
 		cat1.getProdutos().addAll(Arrays.asList(pro1,pro3));
 		cat2.getProdutos().addAll(Arrays.asList(pro2));
+		
+//		List<Aula> aulas = c1.getAulas();
+//		aulas.add(a1);
+//		System.out.println(aulas);
 		
 		pro1.getCategorias().addAll(Arrays.asList(cat1));
 		pro2.getCategorias().addAll(Arrays.asList(cat2));
@@ -115,11 +128,24 @@ public class MarketplaceApplication implements CommandLineRunner{
 		Pagamento pagtoCartao1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagtoCartao1);
 		
+//		Pagamento pagtoBoleto = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped1, sdf.parse("20/10/2017 00:00"), null);
+//		ped1.setPagamento(pagtoBoleto);
+		
 		cli1.getPedidos().addAll(Arrays.asList(ped1));
 		
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1));
 		pagamentoRepository.saveAll(Arrays.asList(pagtoCartao1));
+		
+	ItemPedido ip1 = new ItemPedido(ped1, pro3, 0.00, 1, 2000.00);
+	
+	ped1.getItens().addAll(Arrays.asList(ip1));
+	
+	ped1.getItens().addAll(Arrays.asList(ip1));
+	
+   pro1.getItens().addAll(Arrays.asList(ip1));
+   
+   itemPedidoRepository.saveAll(Arrays.asList(ip1));
 		
 		
 		
