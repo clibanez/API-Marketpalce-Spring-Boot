@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
 
 @Entity
 public class Pedido implements Serializable{

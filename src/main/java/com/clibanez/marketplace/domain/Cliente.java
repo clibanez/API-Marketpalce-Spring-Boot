@@ -7,20 +7,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Id;
-
 import javax.persistence.OneToMany;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
-
-
-
 import com.clibanez.marketplace.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable{
