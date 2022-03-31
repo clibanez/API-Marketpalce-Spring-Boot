@@ -14,12 +14,17 @@ import com.clibanez.marketplace.services.exceptions.ObjectNotFoundException;
 public class CategoriaService {
 	
 	@Autowired
-	private CategoriaRepository CategoriaRepository;
+	private CategoriaRepository categoriaRepository;
 	
 	public Categoria findById(Integer id) {
-		Optional<Categoria> findById = CategoriaRepository.findById(id);
+		Optional<Categoria> findById = categoriaRepository.findById(id);
 		return findById.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+	}
+
+	public Categoria saveAll(Categoria categoria) {
+		categoria.setId(null);
+		return categoriaRepository.save(categoria);
 	}
 	
 
