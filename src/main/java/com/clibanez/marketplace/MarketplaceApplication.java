@@ -19,7 +19,7 @@ import com.clibanez.marketplace.domain.Endereco;
 import com.clibanez.marketplace.domain.Estado;
 import com.clibanez.marketplace.domain.ItemPedido;
 import com.clibanez.marketplace.domain.Pagamento;
-import com.clibanez.marketplace.domain.PagamentoComBoleto;
+
 import com.clibanez.marketplace.domain.PagamentoComCartao;
 import com.clibanez.marketplace.domain.Pedido;
 import com.clibanez.marketplace.domain.Produto;
@@ -76,7 +76,11 @@ public class MarketplaceApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		Categoria cat1 = new Categoria(null,"Informarica");
 		Categoria cat2 = new Categoria(null,"casa");
-		
+		Categoria cat3 = new Categoria(null, "Cama mesa & banho");
+		Categoria cat4 = new Categoria(null, "Brinquedos");
+		Categoria cat5 = new Categoria(null, "Eletronico");
+		Categoria cat6 = new Categoria(null, "Jardim");
+		Categoria cat7 = new Categoria(null, "Automovel");
 		
 		Produto pro1 = new Produto(null, "mouse",35.00);
 		Produto pro2 = new Produto(null, "Messa" ,10.00);
@@ -93,7 +97,7 @@ public class MarketplaceApplication implements CommandLineRunner{
 		pro2.getCategorias().addAll(Arrays.asList(cat2));
 		pro3.getCategorias().addAll(Arrays.asList(cat1));
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1,cat2,cat3,cat4,cat5,cat6,cat7));
 		produtoRepository.saveAll(Arrays.asList(pro1,pro2,pro3));
 		
 		
